@@ -1,0 +1,31 @@
+version: 1.0
+
+description: A workflow for creating AWS AMIs.
+
+tasks:
+  fetch_aws_credentials:
+    action: vault.read path="aws/creds/stackstorm"
+    next:
+      - when: <% succeeded() %>
+        publish:
+          - access_key: <% result().result.access_key %>
+          - secret_key: <% result().result.secret_key %>
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
+        do:
+          - build_ami
+
+  build_ami:
+    delay: 8
+    action: packer.build 
+    input:    
+      packerfile: "/opt/stackstorm/aws-ami.json"
+      variables: {"aws_access_key":"<% ctx('access_key') %>","aws_secret_key":"<% ctx('secret_key') %>"}
+    next:
+      - when: <% succeeded() %>
+        publish:
+          - stdout: <% result().stdout %>
+          - stderr: <% result().stderr %>
+
+output:
+  - stdout: <% ctx(stdout) %>
