@@ -1,23 +1,40 @@
 {
     "variables" : {
         "region" : "us-east-1",
-        "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
-        "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}"
+        "aws_access_key": "",
+        "aws_secret_key": ""
     },
     "builders" : [
         {
             "type" : "amazon-ebs",
             "region" : "{{user `region`}}",
+            "access_key": "{{user `aws_access_key`}}",
+            "secret_key": "{{user `aws_secret_key`}}",
             "instance_type" : "t2.micro",
-            "source_ami" : "ami-032564940f9afd5c0",
+            "source_ami" : "ami-b70554c8",
             "ssh_username" : "ec2-user",
             "ami_name" : "docker-17.12.1-ce",
             "ami_description" : "Amazon Linux Image with Docker-CE",
+            "vpc_id": "vpc-5523f52e",
+            "subnet_id": "subnet-53586237",
             "run_tags" : {
                 "Name" : "packer-builder-docker",
                 "Tool" : "Packer",
                 "Author" : "mreed"
             }
         }
-    ]
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": ["sudo yum install -y httpd","sudo systemctl start httpd"]
+        }
+      ],
+  "post-processors": [
+    {
+      "type": "manifest",
+      "output": "manifest.json",
+      "strip_path": true
+    }
+  ]
 }
