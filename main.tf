@@ -11,6 +11,14 @@ provider "aws" {
   region     = "${var.region}"
 }
 
+terraform {
+  backend "s3" {
+    bucket = "grt-tf-bucket"
+    key    = "stackstorm/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
 module "ec2_cluster" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
   version                = "1.12.0"
