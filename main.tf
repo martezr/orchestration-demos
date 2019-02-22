@@ -34,5 +34,5 @@ module "ec2_cluster" {
 }
 
 output "address" {
-  value = "${module.ec2_cluster.aws_instance.this_t2.public_ip}"
+  value = "${module.ec2_cluster.public_ip}"
 }
