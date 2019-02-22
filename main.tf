@@ -16,6 +16,8 @@ terraform {
     bucket = "grt-tf-bucket"
     key    = "stackstorm/terraform.tfstate"
     region = "us-east-1"
+    access_key = "${var.access_key}"
+    secret_key = "${var.secret_key}"
   }
 }
 
