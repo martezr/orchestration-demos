@@ -23,9 +23,9 @@ module "ec2_cluster" {
   instance_type          = "t2.micro"
   key_name               = "InSpecDemo"
   monitoring             = false
-  vpc_security_group_ids = ["sg-0a61bb03e71dcbaed"]
+  vpc_security_group_ids = ["sg-084c9b0de69d8c79b"]
   subnet_id              = "subnet-53586237"
-
+  
   tags = {
     Terraform = "true"
     Environment = "dev"
