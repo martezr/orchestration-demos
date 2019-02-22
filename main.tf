@@ -32,3 +32,7 @@ module "ec2_cluster" {
     Environment = "dev"
   }
 }
+
+output "address" {
+  value = "${module.ec2_cluster.aws_instance.this_t2.public_ip}"
+}
