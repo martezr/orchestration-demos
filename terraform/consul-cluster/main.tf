@@ -73,3 +73,7 @@ resource "vsphere_virtual_machine" "consul" {
     }
   }
 }
+
+output "instance_ip_addr" {
+  value = vsphere_virtual_machine.consul.default_ip_address
+}
