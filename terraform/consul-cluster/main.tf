@@ -84,6 +84,7 @@ resource "vsphere_virtual_machine" "consul" {
     }
     connection {
       type     = "ssh"
+      host     = "${vsphere_virtual_machine.consul.default_ip_address}"
       user     = "root"
       password = "${var.root_password}"
     }
