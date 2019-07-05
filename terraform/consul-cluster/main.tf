@@ -72,6 +72,22 @@ resource "vsphere_virtual_machine" "consul" {
       ipv4_gateway = "10.0.0.1"
     }
   }
+
+  provisioner "puppet" {
+    server             = "grtpemaster01.grt.local"
+    server_user        = "root"
+    autosign           = false
+    open_source        = false
+    certname           = "terraform-consul.grt.local"
+    extension_requests = {
+      pp_role = "consul"
+    }
+    connection {
+      type     = "ssh"
+      user     = "root"
+      password = "${var.root_password}"
+    }
+  }
 }
 
 output "instance_ip_addr" {
