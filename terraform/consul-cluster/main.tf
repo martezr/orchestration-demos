@@ -91,6 +91,10 @@ resource "vsphere_virtual_machine" "consul" {
   }
 }
 
+output "vm_hostname" {
+  value = "terraform-consul.grt.local"
+}
+
 output "instance_ip_addr" {
   value = "${vsphere_virtual_machine.consul.default_ip_address}"
 }
