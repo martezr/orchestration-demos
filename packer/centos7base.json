@@ -1,0 +1,47 @@
+{
+  "variables": {
+    "vsphere_password": "",
+    "aws_secret_key": ""
+  },
+  "builders": [
+    {
+      "type": "vsphere-iso",
+
+      "vcenter_server": "grtvcenter01.grt.local",
+      "insecure_connection": "true",
+      "username": "administrator@vsphere.local",
+      "password": "{{user `vsphere_password`}}",
+      "cluster": "GRT-Cluster",
+      "host": "10.0.0.246",
+
+      "vm_name":  "centos7baseperms",
+      "convert_to_template": "true",
+      "folder": "Templates",
+      "CPUs": "2",
+      "RAM": "4096",
+      "network": "VM Network",
+      "network_card": "e1000",
+      "guest_os_type": "centos64Guest",
+      "datastore": "Local_Storage",
+      "disk_size": "10000",
+      "disk_thin_provisioned": true,
+      "iso_paths": [ "[Local_Storage] ISOS/CentOS-7-x86_64-Minimal-1810.iso"],
+      "floppy_files": [
+        "{{template_dir}}/ks.cfg"
+      ],
+
+      "boot_wait": "10s",
+
+      "boot_command": [
+        "<tab>",
+        " text inst.ks=hd:fd0:/ks.cfg net.ifnames=0 biosdevname=0",
+        "<wait>",
+        "<enter>",
+        "<wait>",
+        "<enter>"
+      ],
+      "ssh_username": "root",
+      "ssh_password": "password"
+    }
+  ]
+}
