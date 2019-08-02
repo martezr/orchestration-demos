@@ -31,13 +31,12 @@ data "vsphere_network" "network" {
 }
 
 data "vsphere_virtual_machine" "template" {
-  name          = "centos7base"
+  name          = "${var.template_name}"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
-resource "vsphere_virtual_machine" "consul" {
-  name       = "terraform-consul0${count.index + 1}"
-  count      = 1
+resource "vsphere_virtual_machine" "test" {
+  name       = "terraform-test"
   num_cpus   = 2
   memory     = 4096
 
@@ -64,7 +63,7 @@ resource "vsphere_virtual_machine" "consul" {
 
     customize {
       linux_options {
-        host_name = "terraform-consul0${count.index + 1}"
+        host_name = "terraform-test"
         domain    = "grt.local"
       }
 
@@ -76,9 +75,9 @@ resource "vsphere_virtual_machine" "consul" {
 }
 
 output "vm_hostname" {
-  value = "terraform-consul.grt.local"
+  value = "terraform-test.grt.local"
 }
 
 output "instance_ip_addr" {
-  value = "${vsphere_virtual_machine.consul.*.default_ip_address}"
+  value = "${vsphere_virtual_machine.test.*.default_ip_address}"
 }

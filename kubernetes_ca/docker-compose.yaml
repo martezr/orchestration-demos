@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  vault:
+    image: vault:latest
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=myroot
+    expose:
+      - "8200"
+    ports:
+      - "8200:8200"
+
+  rubyapp:
+    build:
+      context: .
+    depends_on:
+      - vault
+    command: sleep 6000
