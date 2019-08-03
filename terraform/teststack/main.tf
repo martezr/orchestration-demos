@@ -61,6 +61,17 @@ resource "vsphere_virtual_machine" "test" {
   clone {
     template_uuid = "${data.vsphere_virtual_machine.template.id}"
 
+    customize {
+      linux_options {
+        host_name = "terraform-test"
+        domain    = "grt.local"
+      }
+
+      network_interface {}
+      dns_server_list = ["10.0.0.200"]
+      ipv4_gateway = "10.0.0.1"
+    }
+
   }
 }
 
