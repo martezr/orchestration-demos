@@ -49,10 +49,10 @@
         "y<enter>",
         "<wait10><wait10><wait10><wait10>",
         "reboot<enter>",
-        "<wait10><wait10>",
+        "<wait10><wait10><wait10>",
         "root<enter>",
-        "jetbrains<enter><wait>",
-        "mount -t vfat /dev/fd0 /media/floppy<enter><wait>",
+        "jetbrains<enter><wait10>",
+        "mount -t vfat /dev/fd0 /media/floppy<enter><wait10>",
         "/media/floppy/SETUP.SH<enter>"
       ],
 
