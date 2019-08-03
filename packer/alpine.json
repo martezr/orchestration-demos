@@ -11,7 +11,7 @@
       "username": "administrator@vsphere.local",
       "insecure_connection": true,
 
-      "vm_name": "alpine-{{timestamp}}",
+      "vm_name": "alpinetemp",
       "password": "{{user `vsphere_password`}}",
       "cluster": "GRT-Cluster",
       "host": "10.0.0.246",
