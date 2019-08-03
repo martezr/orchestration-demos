@@ -1,0 +1,70 @@
+{
+  "variables": {
+    "vsphere_password": "",
+    "aws_secret_key": ""
+  },
+  "builders": [
+    {
+      "type": "vsphere-iso",
+
+      "vcenter_server": "grtvcenter01.grt.local",
+      "username": "administrator@vsphere.local",
+      "insecure_connection": true,
+
+      "vm_name": "alpine-{{timestamp}}",
+      "password": "{{user `vsphere_password`}}",
+      "cluster": "GRT-Cluster",
+      "host": "10.0.0.246",
+
+      "convert_to_template": "true",
+      "folder": "Templates",
+
+      "CPUs":             1,
+      "RAM":              1024,
+      "disk_controller_type":  "pvscsi",
+      "disk_size":        2048,
+      "disk_thin_provisioned": true,
+      "network_card": "vmxnet3",
+      "network": "VM Network",
+
+      "guest_os_type": "other3xLinux64Guest",
+
+      "iso_paths": [
+        "[Local_Storage] ISOS/alpine-extended-3.10.1-x86_64.iso"
+      ],
+      "floppy_files": [
+        "{{template_dir}}/answerfile",
+        "{{template_dir}}/setup.sh"
+      ],
+
+      "boot_wait": "15s",
+      "boot_command": [
+        "root<enter><wait>",
+        "mount -t vfat /dev/fd0 /media/floppy<enter><wait>",
+        "setup-alpine -f /media/floppy/answerfile<enter>",
+        "<wait5>",
+        "jetbrains<enter>",
+        "jetbrains<enter>",
+        "<wait5>",
+        "y<enter>",
+        "<wait10><wait10><wait10><wait10>",
+        "reboot<enter>",
+        "<wait10><wait10>",
+        "root<enter>",
+        "jetbrains<enter><wait>",
+        "mount -t vfat /dev/fd0 /media/floppy<enter><wait>",
+        "/media/floppy/SETUP.SH<enter>"
+      ],
+
+      "ssh_username": "root",
+      "ssh_password": "jetbrains"
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": ["ls /"]
+    }
+  ]
+}
