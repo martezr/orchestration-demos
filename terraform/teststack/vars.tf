@@ -14,6 +14,10 @@ variable "root_password" {
   description = "root password"
 }
 
+variable "vm_password" {
+  description = "vm root password"
+}
+
 variable "template_name" {
   description = "virtual machine template name"
 }

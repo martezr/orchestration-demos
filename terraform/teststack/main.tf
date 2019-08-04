@@ -73,6 +73,37 @@ resource "vsphere_virtual_machine" "test" {
     }
 
   }
+
+  provisioner "puppet" {
+    server      = "grtpemaster01.grt.local"
+    server_user = "root"
+    autosign    = true
+    open_source = false
+    certname    = "terraform-test.grt.local"
+    extension_requests = {
+      pp_role = "demo"
+    }
+    connection {
+      type = "ssh"
+      host = "${self.default_ip_address}"
+      user = "root"
+      password = "${var.vm_password}"
+    }
+  }
+
+  provisioner "remote-exec" {
+    when = "destroy"
+    inline = [
+      "puppet node purge puppet-demo.grt.local",
+    ]
+    connection {
+      type = "ssh"
+      host = "grtpemaster01.grt.local"
+      user = "root"
+      password = "${var.root_password}"
+    }
+  }
+
 }
 
 output "vm_hostname" {
