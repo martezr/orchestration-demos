@@ -94,7 +94,7 @@ resource "vsphere_virtual_machine" "test" {
   provisioner "remote-exec" {
     when = "destroy"
     inline = [
-      "puppet node purge puppet-demo.grt.local",
+      "puppet node purge terraform-test.grt.local",
     ]
     connection {
       type = "ssh"
