@@ -1,0 +1,8 @@
+version: 2
+groups:
+  - name: kubemaster
+    targets:
+      - _plugin: terraform
+        dir: /stackstorm/orchestration-demos/terraform/kubernetes
+        resource_type: vsphere_virtual_machine.kubernetes-master
+        uri: default_ip_address
