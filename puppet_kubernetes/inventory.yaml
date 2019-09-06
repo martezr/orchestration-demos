@@ -3,6 +3,14 @@ groups:
   - name: kubemaster
     targets:
       - _plugin: terraform
-        dir: /stackstorm/orchestration-demos/terraform/kubernetes
+        dir: /stackstorm/orchestration-demos/terraform/kubernetes/
         resource_type: vsphere_virtual_machine.kubernetes-master
         uri: default_ip_address
+        statefile: terraform.tfstate
+  - name: kubeworkers
+    targets:
+      - _plugin: terraform
+        dir: /stackstorm/orchestration-demos/terraform/kubernetes/
+        resource_type: vsphere_virtual_machine.kubernetes-worker
+        uri: default_ip_address
+        statefile: terraform.tfstate

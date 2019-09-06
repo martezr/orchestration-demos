@@ -32,7 +32,7 @@ data "vsphere_network" "network" {
 }
 
 data "vsphere_virtual_machine" "template" {
-  name          = "centos7base"
+  name          = "kubebase"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 
@@ -78,37 +78,6 @@ resource "vsphere_virtual_machine" "kubernetes-master" {
       ipv4_gateway = "10.0.0.1"
     }
   }
-
-  provisioner "puppet" {
-    server             = "grtpemaster01.grt.local"
-    server_user        = "root"
-    autosign           = false
-    open_source        = false
-    certname           = "kubemaster${count.index + 1}.grt.local"
-    extension_requests = {
-      pp_role = "kubemaster"
-    }
-    connection {
-      type     = "ssh"
-      host     = "10.0.0.3${count.index + 1}"
-      user     = "root"
-      password = "${var.root_password}"
-    }
-  }
-
-  provisioner "remote-exec" {
-    when   = "destroy"
-    inline = [
-      "puppet node purge kubemaster${count.index + 1}.grt.local",
-    ]
-    connection {
-      type     = "ssh"
-      host     = "grtpemaster01.grt.local"
-      user     = "root"
-      password = "${var.root_password}"
-    }
-  }
-
 }
 
 resource "vsphere_virtual_machine" "kubernetes-worker" {
@@ -150,36 +119,6 @@ resource "vsphere_virtual_machine" "kubernetes-worker" {
       }
       dns_server_list = ["10.0.0.200"]
       ipv4_gateway = "10.0.0.1"
-    }
-  }
-
-  provisioner "puppet" {
-    server             = "grtpemaster01.grt.local"
-    server_user        = "root"
-    autosign           = false
-    open_source        = false
-    certname           = "kubeworker${count.index + 1}.grt.local"
-    extension_requests = {
-      pp_role = "kubeworker"
-    }
-    connection {
-      type     = "ssh"
-      host     = "10.0.0.3${count.index + 2}"
-      user     = "root"
-      password = "${var.root_password}"
-    }
-  }
-
-  provisioner "remote-exec" {
-    when   = "destroy"
-    inline = [
-      "puppet node purge kubeworker${count.index + 1}.grt.local",
-    ]
-    connection {
-      type     = "ssh"
-      host     = "grtpemaster01.grt.local"
-      user     = "root"
-      password = "${var.root_password}"
     }
   }
 }
