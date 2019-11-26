@@ -67,6 +67,7 @@ resource "vsphere_virtual_machine" "kubernetes-master" {
 
   clone {
     template_uuid = "${data.vsphere_virtual_machine.template.id}"
+    linked_clone = true
 
     customize {
       linux_options {
@@ -110,6 +111,7 @@ resource "vsphere_virtual_machine" "kubernetes-worker" {
 
   clone {
     template_uuid = "${data.vsphere_virtual_machine.template.id}"
+    linked_clone = true
 
     customize {
       linux_options {
