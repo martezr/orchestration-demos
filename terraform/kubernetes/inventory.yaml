@@ -5,7 +5,7 @@ groups:
       - _plugin: terraform
         resource_type: vsphere_virtual_machine.kubernetes-master
         uri: default_ip_address
-        dir: .
+        dir: /stackstorm/orchestration-demos/terraform/kubernetes
         backend: remote
     config:
       transport: ssh
@@ -18,7 +18,7 @@ groups:
       - _plugin: terraform
         resource_type: vsphere_virtual_machine.kubernetes-worker
         uri: default_ip_address
-        dir: .
+        dir: /stackstorm/orchestration-demos/terraform/kubernetes
         backend: remote
     config:
       transport: ssh
