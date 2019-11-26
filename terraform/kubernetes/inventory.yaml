@@ -1,0 +1,28 @@
+version: 2
+groups:
+  - name: kubemasters
+    targets:
+      - _plugin: terraform
+        resource_type: vsphere_virtual_machine.kubernetes-master
+        uri: default_ip_address
+        dir: .
+        backend: remote
+    config:
+      transport: ssh
+      ssh:
+        user: root
+        connect-timeout: 300
+        host-key-check: false
+  - name: kubeworkers
+    targets:
+      - _plugin: terraform
+        resource_type: vsphere_virtual_machine.kubernetes-worker
+        uri: default_ip_address
+        dir: .
+        backend: remote
+    config:
+      transport: ssh
+      ssh:
+        user: root
+        connect-timeout: 300
+        host-key-check: false
