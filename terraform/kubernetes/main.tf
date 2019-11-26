@@ -1,5 +1,7 @@
 terraform {
-  backend "local" {}
+  backend "local" {
+    path = "/stackstorm/k8s.tfstate"
+  }
 }
 
 provider "vsphere" {
