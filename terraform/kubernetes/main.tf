@@ -60,7 +60,7 @@ resource "vsphere_virtual_machine" "kubernetes-master" {
 
   disk {
     label            = "disk0"
-    size             = "40"
+    size             = "30"
     eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
     thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
   }
@@ -104,7 +104,7 @@ resource "vsphere_virtual_machine" "kubernetes-worker" {
 
   disk {
     label            = "disk0"
-    size             = "60"
+    size             = "30"
     eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
     thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
   }
