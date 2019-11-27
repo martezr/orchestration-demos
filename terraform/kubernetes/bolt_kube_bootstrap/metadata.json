@@ -1,0 +1,32 @@
+{
+    "name": "martezr-bolt_kube_bootstrap",
+    "version": "1.0.0",
+    "author": "martezr",
+    "summary": "A colletction of Puppet tasks focused on security operations",
+    "license": "Apache-2.0",
+    "source": "https://github.com/martezr/puppet-secops_tasks",
+    "project_page": "https://github.com/martezr/puppet-secops_tasks",
+    "issues_url": "https://github.com/martezr/puppet-secops_tasks/issues",
+    "dependencies": [
+  
+    ],
+    "operatingsystem_support": [
+      {
+        "operatingsystem": "Windows",
+        "operatingsystemrelease": [
+          "2012 R2",
+          "2016"
+        ]
+      }
+    ],
+    "requirements": [
+      {
+        "name": "puppet",
+        "version_requirement": ">= 4.7.0 < 7.0.0"
+      }
+    ],
+    "pdk-version": "1.12.0",
+    "template-url": "pdk-default#1.12.0",
+    "template-ref": "1.12.0-0-g55d9ae2"
+  }
+  

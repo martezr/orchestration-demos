@@ -1,0 +1,10 @@
+{
+    "description": "Bootstrap Kubernetes",
+    "input_method": "stdin",
+    "parameters": {
+      "networking": {
+        "description": "Kubernetes networking to choose",
+        "type": "Optional[String[1]]"
+      }
+    }
+  }
