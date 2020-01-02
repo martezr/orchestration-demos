@@ -4,9 +4,10 @@ groups:
     targets:
       - _plugin: terraform
         resource_type: vsphere_virtual_machine.kubernetes-master
-        uri: default_ip_address
         dir: /stackstorm/orchestration-demos/terraform/kubernetes
         backend: remote
+        target_mapping:
+          uri: default_ip_address
     config:
       transport: ssh
       ssh:
@@ -17,9 +18,10 @@ groups:
     targets:
       - _plugin: terraform
         resource_type: vsphere_virtual_machine.kubernetes-worker
-        uri: default_ip_address
         dir: /stackstorm/orchestration-demos/terraform/kubernetes
         backend: remote
+        target_mapping:
+          uri: default_ip_address
     config:
       transport: ssh
       ssh:
