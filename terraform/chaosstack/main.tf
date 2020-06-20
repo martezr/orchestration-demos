@@ -34,7 +34,7 @@ data "aws_ami" "centos" {
 
 resource "aws_launch_template" "chaos_launch_template" {
   name_prefix   = "chaos"
-  image_id      = "${data.aws_ami.centos.id}"
+  image_id      = data.aws_ami.centos.id
   instance_type = "t2.micro"
 }
 
