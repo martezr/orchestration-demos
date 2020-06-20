@@ -48,7 +48,7 @@ resource "aws_autoscaling_group" "chaos" {
   min_size           = 2
 
   launch_template {
-    id      = "${aws_launch_template.chaos_launch_template.id}"
+    id      = aws_launch_template.chaos_launch_template.id
     version = "$Latest"
   }
 }
