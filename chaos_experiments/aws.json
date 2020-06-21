@@ -1,0 +1,52 @@
+{
+    "version": "1.0.0",
+    "title": "Ensure AWS resilliency",
+    "description": "If an autoscale fails another node should become the leader",
+    "tags": ["aws"],
+    "configuration": {
+        "aws_region": "us-east-1",
+        "instance_id": {
+            "type": "env",
+            "key": "instance_id"
+        }
+    },
+    "steady-state-hypothesis": {
+        "title": "Application responds",
+        "probes": [
+            {
+                "type": "probe",
+                "name": "check-web-service",
+                "tolerance": 200,
+                "provider": {
+                    "type": "http",
+                    "timeout": [2, 2],
+                    "expected_status": 200,
+                    "url": "https://www.google.com"
+                }
+            }
+]
+    },
+    "method": [
+        {
+            "provider": {
+              "module": "chaosaws.ec2.actions",
+              "type": "python",
+              "func": "terminate_instance",
+              "arguments": {
+                  "instance_id": "${instance_id}"
+              }
+            },
+            "type": "action",
+            "name": "terminate-asg-instance"
+          },
+          {
+            "pauses": {
+                "after": 10
+            }
+          },
+        {
+            "ref": "check-web-service"
+        }
+    ],
+    "rollbacks": []
+}

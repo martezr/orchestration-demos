@@ -38,6 +38,7 @@ resource "aws_launch_template" "chaos_launch_template" {
   name_prefix   = "chaos"
   image_id      = data.aws_ami.centos.id
   instance_type = "t2.micro"
+  vpc_security_group_ids  = [aws_security_group.chaosstack-securitygroup.id]
   network_interfaces {
     associate_public_ip_address = true
     delete_on_termination = true
@@ -55,5 +56,32 @@ resource "aws_autoscaling_group" "chaos" {
   launch_template {
     id      = aws_launch_template.chaos_launch_template.id
     version = "$Latest"
+  }
+}
+
+resource "aws_security_group" "chaosstack-securitygroup" {
+  description = "Chaos Stack Security Group"
+  name        = "chaosstack-securitygroup"
+  vpc_id      = "vpc-5523f52e"
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    self      = true
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
