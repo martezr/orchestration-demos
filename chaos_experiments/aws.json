@@ -37,9 +37,7 @@
               }
             },
             "type": "action",
-            "name": "terminate-asg-instance"
-          },
-          {
+            "name": "terminate-asg-instance",
             "pauses": {
                 "after": 10
             }
