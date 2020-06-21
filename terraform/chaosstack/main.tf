@@ -47,7 +47,7 @@ resource "aws_launch_template" "chaos_launch_template" {
 
 resource "aws_autoscaling_group" "chaos" {
   name = "chaosstack"
-  availability_zones = ["us-east-1a","us-east-1b"]
+  availability_zones = ["us-east-1b"]
   desired_capacity   = 2
   max_size           = 3
   min_size           = 2
