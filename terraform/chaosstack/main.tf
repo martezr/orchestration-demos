@@ -38,6 +38,11 @@ resource "aws_launch_template" "chaos_launch_template" {
   name_prefix   = "chaos"
   image_id      = data.aws_ami.centos.id
   instance_type = "t2.micro"
+  network_interfaces {
+    associate_public_ip_address = true
+    delete_on_termination = true
+    subnet_id = "subnet-03a54f2d"
+  }
 }
 
 resource "aws_autoscaling_group" "chaos" {
