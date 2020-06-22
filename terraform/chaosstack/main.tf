@@ -46,6 +46,7 @@ resource "aws_launch_template" "chaos_launch_template" {
     subnet_id = "subnet-03a54f2d"
     security_groups  = [aws_security_group.chaosstack-securitygroup.id]
   }
+  user_data = filebase64("${path.module}/web.sh")
 }
 
 resource "aws_lb" "chaos_alb" {
