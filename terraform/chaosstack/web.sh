@@ -1,7 +1,7 @@
 #!/bin/bash
 
-setenforce 0
-yum -y install nginx
-systemctl start nginx
-systemctl enable nginx
-systemctl stop firewalld
+sudo setenforce 0
+sudo yum -y install epel-release
+sudo yum -y install nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
