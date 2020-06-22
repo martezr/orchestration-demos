@@ -40,6 +40,8 @@ resource "aws_launch_template" "chaos_launch_template" {
   name_prefix   = "chaos"
   image_id      = data.aws_ami.centos.id
   instance_type = "t2.micro"
+  key_name = "InSpecDemo"
+  
   block_device_mappings {
     device_name = "/dev/sda1"
 
