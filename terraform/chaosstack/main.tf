@@ -46,7 +46,42 @@ resource "aws_launch_template" "chaos_launch_template" {
   }
 }
 
-resource "aws_autoscaling_group" "chaos" {
+resource "aws_lb" "chaos_alb" {
+  name               = "chaosstack-alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.chaosstack-securitygroup.id]
+  subnets            = ["subnet-03a54f2d"]
+
+  tags = {
+    Name = "chaosstack-alb"
+  }
+}
+
+resource "aws_lb_listener" "chaos_listener" {
+  load_balancer_arn = "${aws_lb.chaos_alb.arn}"
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = "${aws_lb_target_group.chaos_tg.arn}"
+  }
+}
+
+resource "aws_lb_target_group" "chaos_tg" {
+  name     = "chaosstack-targetgroup"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = "vpc-5523f52e"
+}
+
+resource "aws_autoscaling_attachment" "asg_attachment_bar" {
+  autoscaling_group_name = aws_autoscaling_group.chaos_asg.id
+  alb_target_group_arn   = aws_alb_target_group.chaos_tg.arn
+}
+
+resource "aws_autoscaling_group" "chaos_asg" {
   name = "chaosstack"
   availability_zones = ["us-east-1b"]
   desired_capacity   = 2
