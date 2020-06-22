@@ -8,6 +8,10 @@
         "instance_id": {
             "type": "env",
             "key": "instance_id"
+        },
+        "alb_dns_name": {
+            "type": "env",
+            "key": "alb_dns_name"
         }
     },
     "steady-state-hypothesis": {
@@ -21,7 +25,7 @@
                     "type": "http",
                     "timeout": [2, 2],
                     "expected_status": 200,
-                    "url": "https://www.google.com"
+                    "url": "${alb_dns_name}"
                 }
             }
 ]
