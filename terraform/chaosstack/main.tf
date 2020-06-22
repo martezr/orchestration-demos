@@ -40,6 +40,14 @@ resource "aws_launch_template" "chaos_launch_template" {
   name_prefix   = "chaos"
   image_id      = data.aws_ami.centos.id
   instance_type = "t2.micro"
+  block_device_mappings {
+    device_name = "/dev/sda1"
+
+    ebs {
+      volume_size = 8
+      delete_on_termination = true
+    }
+  }
   network_interfaces {
     associate_public_ip_address = true
     delete_on_termination = true
