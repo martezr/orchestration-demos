@@ -42,7 +42,8 @@
               "type": "python",
               "func": "terminate_random_instances",
               "arguments": {
-                  "asg_names": ["${asg_name}"]
+                  "asg_names": ["${asg_name}"],
+                  "instance_count": 1
               }
             },
             "type": "action",
