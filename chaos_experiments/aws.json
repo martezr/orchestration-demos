@@ -3,11 +3,16 @@
     "title": "Ensure AWS resilliency",
     "description": "If an autoscale fails another node should become the leader",
     "tags": ["aws"],
+    "contributions": {
+        "reliability": "high",
+        "security": "none",
+        "scalability": "none"
+    },
     "configuration": {
         "aws_region": "us-east-1",
-        "instance_id": {
+        "asg_name": {
             "type": "env",
-            "key": "instance_id"
+            "key": "asg_name"
         },
         "alb_dns_name": {
             "type": "env",
@@ -33,11 +38,11 @@
     "method": [
         {
             "provider": {
-              "module": "chaosaws.ec2.actions",
+              "module": "chaosaws.asg.actions",
               "type": "python",
-              "func": "terminate_instance",
+              "func": "terminate_random_instances",
               "arguments": {
-                  "instance_id": "${instance_id}"
+                  "asg_names": ["${asg_name}"]
               }
             },
             "type": "action",
